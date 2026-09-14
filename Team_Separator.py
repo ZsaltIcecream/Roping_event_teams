@@ -67,9 +67,6 @@ class TeamGeneratorApp:
                 messagebox.showerror("Error", "Headers and Heelers lists must have equal lengths.")
                 return
 
-            MAX_COUNT = 1000
-            count = 0
-
             MAX_COUNT = 5000
             count = 0
 
@@ -78,12 +75,10 @@ class TeamGeneratorApp:
                 random.shuffle(headers)
                 random.shuffle(heelers)
 
-                flat_order = []
                 for i, j in zip(headers, heelers):
                     if i == j:
                         redo = True
                         break
-                    flat_order.extend([i, j])
 
                 if redo:
                     count += 1
@@ -91,8 +86,12 @@ class TeamGeneratorApp:
                         break
                     continue
 
-                for i in range(len(flat_order) - 2):
-                    if flat_order[i] == flat_order[i + 1] == flat_order[i + 2]:
+                for i in range(len(headers) - 2):
+                    team1 = {headers[i], heelers[i]}
+                    team2 = {headers[i + 1], heelers[i + 1]}
+                    team3 = {headers[i + 2], heelers[i + 2]}
+
+                    if team1 & team2 & team3:
                         redo = True
                         break
 
